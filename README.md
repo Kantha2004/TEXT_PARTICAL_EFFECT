@@ -1,4 +1,5 @@
 ## Particle Text Effect
+![Circle Particle Demo](./assets/videos/particle-demo.gif)
 
 ### Author
 **Kanthakumar**
@@ -13,3 +14,5 @@ This particle effect is a customized and enhanced version of an original concept
 A big thanks to Frank's Laboratory for the inspiring tutorial that laid the foundation for this effect.
 
 If you enjoy interactive canvas animations, definitely check out the video and consider supporting the channel!
+
+
