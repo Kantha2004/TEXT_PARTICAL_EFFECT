@@ -1,10 +1,19 @@
 /**
- * @Kanthakumar Here
- * I made a few changes to this effect from Frank's Laboratory YouTube channel.
- * Special thanks to Frank's Laboratory YouTube channel.
+ * @author Kanthakumar
+ *
+ * This particle effect is a customized and enhanced version of an original concept 
+ * by Frank's Laboratory on YouTube.
+ *
  * Inspired by: https://www.youtube.com/watch?v=2F2t1RJoGt8
- * If you like it, go watch and learn how to create it.
+ *
+ * Credits:
+ * A big thanks to Frank's Laboratory for the inspiring tutorial that laid the 
+ * foundation for this effect.
+ *
+ * If you enjoy interactive canvas animations, definitely check out the video and 
+ * consider supporting the channel!
  */
+
 
 import { TextCanvas } from "./TEXT_PARTICAL_EFFECT/TextCanvas";
 import type { CanvasConfig, Gradients } from "./TEXT_PARTICAL_EFFECT/types";
