@@ -1,5 +1,9 @@
 ## Particle Text Effect
-![Circle Particle Demo](./assets/videos/particle-demo.gif)
+![Circle Particle Demo](./assets/images/demo-circles.png)
+![Square Particle Demo](./assets/images/demo-squares.png)
+![Star Particle Demo](./assets/images/demo-stars.png)
+![Triangle Particle Demo](./assets/images/demo-triangles.png)
+<!-- ![Circle Particle Demo](./assets/videos/particle-demo.gif) -->
 
 ### Author
 **Kanthakumar**
