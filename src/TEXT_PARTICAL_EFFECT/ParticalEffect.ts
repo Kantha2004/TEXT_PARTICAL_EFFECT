@@ -53,12 +53,14 @@ export class ParticalEffect {
       this.clearDeactivationTimer();
       this.mouse.mouseX = event.x;
       this.mouse.mouseY = event.y;
+      this.scheduleMouseDeactivation(500);
     });
 
     window.addEventListener('touchmove', (event) => {
       this.clearDeactivationTimer();
       this.mouse.mouseX = event.touches?.[0].pageX;
       this.mouse.mouseY = event.touches?.[0].pageY;
+      this.scheduleMouseDeactivation(500);
     });
 
     window.addEventListener('touchend', () => {
@@ -80,12 +82,12 @@ export class ParticalEffect {
    * Schedules deactivation of the mouse interaction after a short timeout.
    * Useful for touch and click interactions that should fade quickly.
    */
-  private scheduleMouseDeactivation() {
+  private scheduleMouseDeactivation(timeOut?:number) {
     this.clearDeactivationTimer();
     this.deactivationTimerId = window.setTimeout(() => {
       this.mouse.mouseX = -1000;
       this.mouse.mouseY = -1000;
-    }, this.inactivityTimeout);
+    }, (timeOut ?? this.inactivityTimeout));
   }
 
   /**
