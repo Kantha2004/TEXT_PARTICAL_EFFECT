@@ -18,6 +18,7 @@ export class TextCanvas {
   /** The particle effect applied to the rendered text. */
   private particalEffect: ParticalEffect | null;
 
+
   /**
    * Constructs the TextCanvas with the provided configuration.
    * @param config - CanvasConfig object containing setup details.
@@ -103,9 +104,9 @@ export class TextCanvas {
    * Handles multi-line wrapping and vertical alignment.
    */
   public initiateText(): void {
-    const { width, height, fontSize, text, maxWidthRatio } = this.config;
+    const { width, height, fontSize, text, maxWidthRatio, fontFamily = '' } = this.config;
 
-    this.ctx.font = `${fontSize}px Bangers, Arial`;
+    this.ctx.font = `${fontSize}px ${fontFamily}, Arial`;
     this.ctx.textAlign = 'center';
     this.ctx.textBaseline = 'middle';
     this.ctx.fillStyle = this.config.gradients?.length

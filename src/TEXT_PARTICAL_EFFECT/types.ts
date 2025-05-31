@@ -19,5 +19,6 @@ export interface CanvasConfig {
   fontSize: number;
   text: string;
   maxWidthRatio: number;
+  fontFamily?: string;
   gradients?: Gradients;
 }

@@ -27,18 +27,25 @@ const config: CanvasConfig = {
   fontSize: 200,
   text: 'Hello World!',
   maxWidthRatio: 0.8,
-  gradients
+  fontFamily : 'Rowdies',
+  gradients,
 };
 
 try {
+  // Wait for all fonts to be loaded
+  await document.fonts.load(`${config.fontSize}px ${config.fontFamily}`);
+  await document.fonts.ready;
   const textCanvas = new TextCanvas(config);
   textCanvas.initiateText();
   const animate = () => {
     textCanvas.renderEffect();
     requestAnimationFrame(animate);
   };
-  animate()
+  animate();
+
 } catch (error) {
+
   console.error(error);
+  
 }
 

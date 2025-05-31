@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -12,25 +14,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.bangers-regular {
-  font-family: "Bangers", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Bangers', Arial, sans-serif;
 }
 
 body {
-  overflow: hidden;
-  background-color: black;
+  overflow-x: hidden;
 }
 
 #text-canvas{
+  background-color: black;
+  max-width: 100svw;
+  max-height: 100svh;
   position: relative;
   top: 0;
   left: 0;
