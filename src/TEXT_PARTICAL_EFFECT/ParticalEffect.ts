@@ -5,35 +5,29 @@ import type { MousePosition, RGBAColor } from "./types";
  * The ParticalEffect class handles creating and rendering particles based on the pixel data of a canvas.
  */
 export class ParticalEffect {
-  /**
-   * The 2D rendering context of the canvas where particles will be drawn.
-   */
+  /** The 2D rendering context of the canvas where particles will be drawn. */
   readonly context: CanvasRenderingContext2D;
 
-  /**
-   * The spacing between particles in pixels.
-   */
+  /** The spacing between particles in pixels. */
   readonly gap: number;
 
-  /**
-   * The collection of particles being managed and rendered.
-   */
+  /** The collection of particles being managed and rendered. */
   private particals: Partical[];
 
-  /**
-   * Object representing the mouse position and interaction radius.
-   */
+  /** Object representing the mouse position and interaction radius. */
   mouse: MousePosition;
 
-  /**
-   * The width of the canvas.
-   */
+  /** The width of the canvas. */
   canvasWidth: number;
 
-  /**
-   * The height of the canvas.
-   */
+  /** The height of the canvas. */
   canvasHeight: number;
+
+  /** Timer ID used to deactivate mouse interactions after inactivity. */
+  private deactivationTimerId: number | null;
+
+  /** Timeout (ms) to wait before disabling mouse interaction after a touch/click ends. */
+  private readonly inactivityTimeout: number = 300;
 
   /**
    * Creates a new ParticalEffect instance.
@@ -46,26 +40,66 @@ export class ParticalEffect {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.particals = [];
-    this.gap = 4;
+    this.gap = 2;
     this.mouse = {
       radius: 20000, // A large radius for particle interaction
-      mouseX: 0,
-      mouseY: 0
+      mouseX: -1000,
+      mouseY: -1000,
     };
+    this.deactivationTimerId = null;
 
-    // Track mouse movement for interactive particle behavior
+    // Mouse and touch event listeners for interactivity
     window.addEventListener('mousemove', (event) => {
+      this.clearDeactivationTimer();
       this.mouse.mouseX = event.x;
       this.mouse.mouseY = event.y;
     });
 
-    // Initialize particles from current canvas image data
+    window.addEventListener('touchmove', (event) => {
+      this.clearDeactivationTimer();
+      this.mouse.mouseX = event.touches?.[0].pageX;
+      this.mouse.mouseY = event.touches?.[0].pageY;
+    });
+
+    window.addEventListener('touchend', () => {
+      this.scheduleMouseDeactivation();
+    });
+
+    window.addEventListener('touchcancel', () => {
+      this.scheduleMouseDeactivation();
+    });
+
+    window.addEventListener('click', () => {
+      this.scheduleMouseDeactivation();
+    });
+
     this.convertToParticals();
   }
 
   /**
-   * Converts canvas image data into individual particles based on non-transparent pixels.
-   * This method reads RGBA pixel data and creates a particle for each visible point.
+   * Schedules deactivation of the mouse interaction after a short timeout.
+   * Useful for touch and click interactions that should fade quickly.
+   */
+  private scheduleMouseDeactivation() {
+    this.clearDeactivationTimer();
+    this.deactivationTimerId = window.setTimeout(() => {
+      this.mouse.mouseX = -1000;
+      this.mouse.mouseY = -1000;
+    }, this.inactivityTimeout);
+  }
+
+  /**
+   * Clears the existing mouse deactivation timer, preventing unintended hiding of the mouse position.
+   */
+  private clearDeactivationTimer() {
+    if (this.deactivationTimerId) {
+      clearTimeout(this.deactivationTimerId);
+    }
+  }
+
+  /**
+   * Converts canvas image data into particles based on non-transparent pixels.
+   * Each visible pixel becomes a particle with its RGBA color.
    */
   public convertToParticals() {
     this.particals = [];
@@ -92,10 +126,10 @@ export class ParticalEffect {
 
   /**
    * Updates and renders all particles on the canvas.
-   * Should be called inside the animation loop to animate the effect.
+   * Should be called within the animation loop.
    */
   public render() {
-    this.particals.forEach(partical => {
+    this.particals.forEach((partical) => {
       partical.update();
       partical.draw();
     });
