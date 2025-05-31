@@ -1,5 +1,15 @@
 import { Partical } from "./Partical";
-import type { MousePosition, RGBAColor } from "./types";
+import type { MousePosition, ParticleShape, RGBAColor } from "./types";
+
+export interface ParticalEffectOptions {
+  /**
+   * Shape to use when drawing each particle.
+   * Can be 'circle', 'square', 'triangle', or 'star'.
+   * @default 'circle'
+   */
+  shape?: ParticleShape;
+  gap?: number;
+}
 
 /**
  * The ParticalEffect class handles creating and rendering particles based on the pixel data of a canvas.
@@ -29,26 +39,44 @@ export class ParticalEffect {
   /** Timeout (ms) to wait before disabling mouse interaction after a touch/click ends. */
   private readonly inactivityTimeout: number = 300;
 
+  /** Shape used when drawing each particle. */
+  shape: ParticleShape;
+
   /**
    * Creates a new ParticalEffect instance.
    * @param context - The 2D context of the target canvas.
    * @param canvasWidth - The width of the canvas.
    * @param canvasHeight - The height of the canvas.
+   * @param options - Additional options such as particle shape.
    */
-  constructor(context: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number) {
+  constructor(
+    context: CanvasRenderingContext2D,
+    canvasWidth: number,
+    canvasHeight: number,
+    options: ParticalEffectOptions = {}
+  ) {
     this.context = context;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.particals = [];
-    this.gap = 2;
+    this.gap = options.gap ?? 4;
     this.mouse = {
-      radius: 20000, // A large radius to avoid using Math.sqrt() when finding distance
+      radius: 20000,
       mouseX: -1000,
       mouseY: -1000,
     };
     this.deactivationTimerId = null;
 
-    // Mouse and touch event listeners for interactivity
+    this.shape = options.shape ?? 'circle';
+
+    this.setupMouseListeners();
+    this.convertToParticals();
+  }
+
+  /**
+   * Registers mouse and touch event listeners for interactivity.
+   */
+  private setupMouseListeners() {
     window.addEventListener('mousemove', (event) => {
       this.clearDeactivationTimer();
       this.mouse.mouseX = event.x;
@@ -63,31 +91,21 @@ export class ParticalEffect {
       this.scheduleMouseDeactivation(500);
     });
 
-    window.addEventListener('touchend', () => {
-      this.scheduleMouseDeactivation();
-    });
-
-    window.addEventListener('touchcancel', () => {
-      this.scheduleMouseDeactivation();
-    });
-
-    window.addEventListener('click', () => {
-      this.scheduleMouseDeactivation();
-    });
-
-    this.convertToParticals();
+    window.addEventListener('touchend', () => this.scheduleMouseDeactivation());
+    window.addEventListener('touchcancel', () => this.scheduleMouseDeactivation());
+    window.addEventListener('click', () => this.scheduleMouseDeactivation());
   }
 
   /**
    * Schedules deactivation of the mouse interaction after a short timeout.
    * Useful for touch and click interactions that should fade quickly.
    */
-  private scheduleMouseDeactivation(timeOut?:number) {
+  private scheduleMouseDeactivation(timeout?: number) {
     this.clearDeactivationTimer();
     this.deactivationTimerId = window.setTimeout(() => {
       this.mouse.mouseX = -1000;
       this.mouse.mouseY = -1000;
-    }, (timeOut ?? this.inactivityTimeout));
+    }, timeout ?? this.inactivityTimeout);
   }
 
   /**
@@ -124,6 +142,13 @@ export class ParticalEffect {
         this.particals.push(new Partical(this, x, y, rgbaColor));
       }
     }
+  }
+
+  /**
+   * Clears the entire canvas.
+   */
+  public clearCanvas() {
+    this.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
 
   /**

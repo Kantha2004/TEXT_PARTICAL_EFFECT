@@ -1,4 +1,4 @@
-import { ParticalEffect } from "./ParticalEffect";
+import { ParticalEffect, type ParticalEffectOptions } from "./ParticalEffect";
 import type { CanvasConfig, Gradients } from "./types";
 
 /**
@@ -125,8 +125,13 @@ export class TextCanvas {
       this.ctx.fillText(line, horizontalCenter, verticalOffset + (fontSize * index));
     });
 
+    const particalEffectOptions: ParticalEffectOptions = {
+      shape: this.config.shape ?? 'circle',
+      gap: this.config.gap,
+    }
+
     // Create particles from the rendered text
-    this.particalEffect = new ParticalEffect(this.ctx, this.config.width, this.config.height);
+    this.particalEffect = new ParticalEffect(this.ctx, this.config.width, this.config.height, particalEffectOptions);
   }
 
   /**

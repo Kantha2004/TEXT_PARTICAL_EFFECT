@@ -116,8 +116,90 @@ export class Partical {
    */
   public draw() {
     this.effect.context.fillStyle = this.color;
+
+    switch (this.effect.shape) {
+      case 'square':
+        this.drawSquare();
+        break;
+      case 'triangle':
+        this.drawTriangle();
+        break;
+      case 'star':
+        this.drawStar();
+        break;
+      case 'circle':
+      default:
+        this.drawCircle();
+        break;
+    }
+  }
+
+
+  /**
+   * Draws the particle as a filled circle.
+   */
+  private drawCircle() {
+    const ctx = this.effect.context;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  /**
+   * Draws the particle as a filled square.
+   */
+  private drawSquare() {
     this.effect.context.fillRect(this.x, this.y, this.size, this.size);
   }
+
+  /**
+   * Draws the particle as a filled upward-pointing triangle.
+   */
+  private drawTriangle() {
+    const ctx = this.effect.context;
+    const half = this.size / 2;
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y - half);               // Top point
+    ctx.lineTo(this.x + half, this.y + half);        // Bottom right
+    ctx.lineTo(this.x - half, this.y + half);        // Bottom left
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  /**
+   * Draws the particle as a 5-pointed star.
+   */
+  private drawStar() {
+    const ctx = this.effect.context;
+    const spikes = 5;
+    const outerRadius = this.size / 2;
+    const innerRadius = outerRadius / 2;
+    let rot = Math.PI / 2 * 3;
+    let x = this.x;
+    let y = this.y;
+    const step = Math.PI / spikes;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y - outerRadius);
+
+    for (let i = 0; i < spikes; i++) {
+      x = this.x + Math.cos(rot) * outerRadius;
+      y = this.y + Math.sin(rot) * outerRadius;
+      ctx.lineTo(x, y);
+      rot += step;
+
+      x = this.x + Math.cos(rot) * innerRadius;
+      y = this.y + Math.sin(rot) * innerRadius;
+      ctx.lineTo(x, y);
+      rot += step;
+    }
+
+    ctx.lineTo(this.x, this.y - outerRadius);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+
 
   /**
    * Updates the particle's position and velocity based on mouse interaction

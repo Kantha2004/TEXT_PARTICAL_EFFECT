@@ -28,6 +28,8 @@ const config: CanvasConfig = {
   text: 'Hello World!',
   maxWidthRatio: 0.8,
   fontFamily : 'Rowdies',
+  shape: 'circle',
+  gap: 5,
   gradients,
 };
 
