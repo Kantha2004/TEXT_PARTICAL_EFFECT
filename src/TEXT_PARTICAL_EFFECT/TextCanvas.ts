@@ -144,4 +144,20 @@ export class TextCanvas {
     this.clearCanvas();
     this.particalEffect?.render();
   }
+
+  /**
+   * Resizes the canvas and updates internal configuration.
+   * This method also re-initializes the text and regenerates particles based on the new dimensions.
+   *
+   * @param width - The new width of the canvas.
+   * @param height - The new height of the canvas.
+   */
+  public resize(width: number, height: number) {
+    this.config.width = width;
+    this.config.height = height;
+    this.canvas.width = width;
+    this.canvas.height = height;
+    this.initiateText();
+  }
+
 }

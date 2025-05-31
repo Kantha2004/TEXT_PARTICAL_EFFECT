@@ -41,6 +41,9 @@ try {
     textCanvas.renderEffect();
     requestAnimationFrame(animate);
   };
+  window.addEventListener('resize', () => {
+      textCanvas.resize(window.innerWidth, window.innerHeight);
+  });
   animate();
 
 } catch (error) {

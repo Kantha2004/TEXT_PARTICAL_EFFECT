@@ -42,7 +42,7 @@ export class ParticalEffect {
     this.particals = [];
     this.gap = 2;
     this.mouse = {
-      radius: 20000, // A large radius for particle interaction
+      radius: 20000, // A large radius to avoid using Math.sqrt() when finding distance
       mouseX: -1000,
       mouseY: -1000,
     };
