@@ -42,24 +42,28 @@ const config: CanvasConfig = {
   gradients,
 };
 
-try {
-  // Wait for all fonts to be loaded
-  await document.fonts.load(`${config.fontSize}px ${config.fontFamily}`);
-  await document.fonts.ready;
-  const textCanvas = new TextCanvas(config);
-  textCanvas.initiateText();
-  const animate = () => {
-    textCanvas.renderEffect();
-    requestAnimationFrame(animate);
-  };
-  window.addEventListener('resize', () => {
-      textCanvas.resize(window.innerWidth, window.innerHeight);
-  });
-  animate();
-
-} catch (error) {
-
-  console.error(error);
+async function loadFonts() {
+  try {
+    // Wait for all fonts to be loaded
+    await document.fonts.load(`${config.fontSize}px ${config.fontFamily}`);
+    await document.fonts.ready;
+    const textCanvas = new TextCanvas(config);
+    textCanvas.initiateText();
+    const animate = () => {
+      textCanvas.renderEffect();
+      requestAnimationFrame(animate);
+    };
+    window.addEventListener('resize', () => {
+        textCanvas.resize(window.innerWidth, window.innerHeight);
+    });
+    animate();
   
+  } catch (error) {
+  
+    console.error(error);
+    
+  }
 }
+
+loadFonts();
 
