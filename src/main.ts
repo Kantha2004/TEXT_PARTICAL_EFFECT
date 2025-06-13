@@ -42,7 +42,7 @@ const config: CanvasConfig = {
   gradients,
 };
 
-async function loadFonts() {
+async function init() {
   try {
     // Wait for all fonts to be loaded
     await document.fonts.load(`${config.fontSize}px ${config.fontFamily}`);
@@ -65,5 +65,5 @@ async function loadFonts() {
   }
 }
 
-loadFonts();
+init();
 
