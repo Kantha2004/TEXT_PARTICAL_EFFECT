@@ -5,9 +5,10 @@ const sitSilderColor = (el: HTMLInputElement) => {
     return sliderValue;
 };
 
-export const initSlider = (fn?: (arg: number) => void) => {
+export const initSlider = (initialValue: number | undefined, fn?: (arg: number) => void) => {
     const sliderEl = document.querySelector("#range") as HTMLInputElement;
     if (!sliderEl) return;
+    sliderEl.value = String(initialValue ?? 2);
     sitSilderColor(sliderEl);
     sliderEl.addEventListener("input", (event: Event) => {
         const target = event.target as HTMLInputElement;

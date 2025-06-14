@@ -40,12 +40,13 @@ const config: CanvasConfig = {
   maxWidthRatio: 0.8,
   fontFamily: 'Rowdies',
   shape: 'circle',
-  gap: 3,
+  gap: 4,
   gradients,
 };
 
 const setupInputBox = (functionToCall: (text: string) => void) => {
   const inputBox = document.querySelector('#input-text-canvas') as HTMLInputElement;
+  inputBox.value = config.text;
   const handleInput = debounce((evt: Event) => {
     functionToCall((evt.target as HTMLInputElement).value);
   }, 400);
@@ -62,7 +63,7 @@ async function init() {
 
     setupInputBox((text) => textCanvas.updateText(text));
 
-    initSlider((value) => {
+    initSlider(config.gap, (value) => {
       config.gap = value;
       textCanvas.updateConfig(config);
     });
