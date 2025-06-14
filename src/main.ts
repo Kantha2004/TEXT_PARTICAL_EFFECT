@@ -17,6 +17,7 @@
 
 import { TextCanvas } from "./TEXT_PARTICAL_EFFECT/TextCanvas";
 import type { CanvasConfig, Gradients } from "./TEXT_PARTICAL_EFFECT/types";
+import { debounce } from "./utils/debounce";
 
 const gradients: Gradients = [
   {
@@ -36,10 +37,18 @@ const config: CanvasConfig = {
   fontSize: 200,
   text: 'Hello World!',
   maxWidthRatio: 0.8,
-  fontFamily : 'Rowdies',
+  fontFamily: 'Rowdies',
   shape: 'circle',
-  gap: 5,
+  gap: 2,
   gradients,
+};
+
+const setupInputBox = (functionToCall: (text: string) => void) => {
+  const inputBox = document.querySelector('#input-text-canvas') as HTMLInputElement;
+  const handleInput = debounce((evt: Event) => {
+    functionToCall((evt.target as HTMLInputElement).value);
+  }, 400);
+  inputBox?.addEventListener('input', handleInput);
 };
 
 async function init() {
@@ -49,19 +58,19 @@ async function init() {
     await document.fonts.ready;
     const textCanvas = new TextCanvas(config);
     textCanvas.initiateText();
+    setupInputBox((text) => textCanvas.updateText(text));
     const animate = () => {
       textCanvas.renderEffect();
       requestAnimationFrame(animate);
     };
     window.addEventListener('resize', () => {
-        textCanvas.resize(window.innerWidth, window.innerHeight);
+      textCanvas.resize(window.innerWidth, window.innerHeight);
     });
+
     animate();
-  
+
   } catch (error) {
-  
     console.error(error);
-    
   }
 }
 

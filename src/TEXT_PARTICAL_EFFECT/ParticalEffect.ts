@@ -167,6 +167,16 @@ export class ParticalEffect {
     this.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
 
+  
+  /**
+   * Clears all particals from the collection by resetting the particals array to empty.
+   * This effectively removes all existing particle instances from the effect system.
+   */
+  public clearParticals() {
+    this.particals = [];
+  }
+  
+
   /**
    * Updates and renders all particles on the canvas.
    * Should be called within the animation loop.
