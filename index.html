@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="./src/style.css" rel="stylesheet" >
+  <link href="./src/style.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TEXT PARTICAL EFFECT</title>
 </head>
@@ -13,6 +13,11 @@
 <body>
   <div id="app">
     <canvas id="text-canvas"></canvas>
+    <div class="absolute bottom-10 w-full flex align-center justify-center">
+      <div class="text-input-container w-[35rem] h-14 rounded-lg border-2 p-10 flex align-center justify-center border-[#ffffff7a]">
+        <input type="text" id="input-text-canvas" class="text-3xl w-[80%] h-full outline-none border-none">
+      </div>
+    </div>
   </div>
   <script type="module" src="/src/main.ts"></script>
 </body>

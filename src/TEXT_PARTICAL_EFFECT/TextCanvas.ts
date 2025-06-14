@@ -121,6 +121,7 @@ export class TextCanvas {
    * Handles multi-line wrapping and vertical alignment.
    */
   public initiateText(): void {
+    this.clearCanvas();
     const { width, height, fontSize, text, maxWidthRatio, fontFamily = '' } = this.config;
 
     this.ctx.font = `${fontSize}px ${fontFamily}, Arial`;
@@ -149,6 +150,20 @@ export class TextCanvas {
 
     // Create particles from the rendered text
     this.particalEffect = new ParticalEffect(this.ctx, this.config.width, this.config.height, particalEffectOptions);
+  }
+
+  /**
+   * Updates the text displayed in the particle effect.
+   * @param newText - The new text to be displayed.
+   * If empty or null, the method will return early without making any changes.
+   * @remarks
+   * This method will reinitialize the text particles after updating the text.
+   */
+  public updateText(newText:string):void {
+    if(!newText) return;
+    this.particalEffect?.clearParticals();
+    this.config.text = newText;
+    this.initiateText();
   }
 
   /**
