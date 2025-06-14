@@ -17,22 +17,25 @@
 
 
     <div class="absolute bottom-10 w-full flex align-center justify-center">
-      <div class="input-container pr-4 w-[40svw] h-14 bg-white rounded-2xl flex items-center justify-between">
+      <div class="input-container pr-1 w-[40svw] h-14 bg-white rounded-2xl flex items-center justify-between">
 
-        <div class="bg-black/10 w-[60%] h-full p-4">
+        <div class="bg-black/10 w-[50%] h-full p-4">
           <input type="text" id="input-text-canvas" value=""
             class="text-3xl text-black w-full h-full outline-none border-none">
         </div>
 
         <div class="relative">
-          <input type="range" min="2" max="5" value="3" id="range"/>
+          <input type="range" min="2" max="5" value="3" id="range" />
         </div>
-        <button class="flex gap-2 items-center cursor-pointer">
-          <p id="partical-shape-indicator" class="text-3xl text-black">
+        <button class="flex gap-2 items-center cursor-pointer rounded-[12px] hover:bg-black/10 p-2">
+          <p id="partical-shape-indicator" class="text-2xl text-black">
             Circles
           </p>
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256" class=" size-6">
-            <path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"
+            class=" size-6">
+            <path
+              d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z">
+            </path>
           </svg>
         </button>
       </div>
