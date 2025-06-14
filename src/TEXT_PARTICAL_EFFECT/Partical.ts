@@ -1,7 +1,7 @@
 /**
  * @author Kanthakumar
  *
- * This particle effect is a customized and enhanced version of an original concept 
+ * This particle effect is a customized version of an original concept 
  * by Frank's Laboratory on YouTube.
  *
  * Inspired by: https://www.youtube.com/watch?v=2F2t1RJoGt8
@@ -124,8 +124,8 @@ export class Partical {
     this.force = 0;
     this.angle = 0;
     this.distance = 0;
-    this.friction = (Math.random() * 0.4) + 0.18;
-    this.ease = (Math.random() * 0.1) + 0.03;
+    this.friction = (Math.random() * 0.4) + 0.25;
+    this.ease = (Math.random() * 0.2) + 0.08;
   }
 
   /**
@@ -226,7 +226,7 @@ export class Partical {
     this.dx = this.effect.mouse.mouseX - this.x;
     this.dy = this.effect.mouse.mouseY - this.y;
     this.distance = (this.dx * this.dx) + (this.dy * this.dy);
-    this.force = -this.effect.mouse.radius / this.distance;
+    this.force = Math.min(-10, Math.max(-120, -this.effect.mouse.radius / this.distance));
 
     if (this.distance < this.effect.mouse.radius) {
       this.angle = Math.atan2(this.dy, this.dx);

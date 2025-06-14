@@ -1,7 +1,7 @@
 /**
  * @author Kanthakumar
  *
- * This particle effect is a customized and enhanced version of an original concept 
+ * This particle effect is a customized version of an original concept 
  * by Frank's Laboratory on YouTube.
  *
  * Inspired by: https://www.youtube.com/watch?v=2F2t1RJoGt8
@@ -15,6 +15,7 @@
  */
 
 
+import { initSlider } from "./range";
 import { TextCanvas } from "./TEXT_PARTICAL_EFFECT/TextCanvas";
 import type { CanvasConfig, Gradients } from "./TEXT_PARTICAL_EFFECT/types";
 import { debounce } from "./utils/debounce";
@@ -39,7 +40,7 @@ const config: CanvasConfig = {
   maxWidthRatio: 0.8,
   fontFamily: 'Rowdies',
   shape: 'circle',
-  gap: 2,
+  gap: 3,
   gradients,
 };
 
@@ -58,11 +59,19 @@ async function init() {
     await document.fonts.ready;
     const textCanvas = new TextCanvas(config);
     textCanvas.initiateText();
+
     setupInputBox((text) => textCanvas.updateText(text));
+
+    initSlider((value) => {
+      config.gap = value;
+      textCanvas.updateConfig(config);
+    });
+
     const animate = () => {
       textCanvas.renderEffect();
       requestAnimationFrame(animate);
     };
+
     window.addEventListener('resize', () => {
       textCanvas.resize(window.innerWidth, window.innerHeight);
     });

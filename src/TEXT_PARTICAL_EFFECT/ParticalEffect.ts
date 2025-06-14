@@ -1,7 +1,7 @@
 /**
  * @author Kanthakumar
  *
- * This particle effect is a customized and enhanced version of an original concept 
+ * This particle effect is a customized version of an original concept 
  * by Frank's Laboratory on YouTube.
  *
  * Inspired by: https://www.youtube.com/watch?v=2F2t1RJoGt8

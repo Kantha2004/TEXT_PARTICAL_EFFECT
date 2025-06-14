@@ -1,7 +1,7 @@
 /**
  * @author Kanthakumar
  *
- * This particle effect is a customized and enhanced version of an original concept 
+ * This particle effect is a customized version of an original concept 
  * by Frank's Laboratory on YouTube.
  *
  * Inspired by: https://www.youtube.com/watch?v=2F2t1RJoGt8
@@ -30,7 +30,7 @@ export class TextCanvas {
   private readonly ctx: CanvasRenderingContext2D;
 
   /** Configuration for canvas size, font, text, and color. */
-  private readonly config: CanvasConfig;
+  private config: CanvasConfig;
 
   /** The particle effect applied to the rendered text. */
   private particalEffect: ParticalEffect | null;
@@ -159,10 +159,26 @@ export class TextCanvas {
    * @remarks
    * This method will reinitialize the text particles after updating the text.
    */
-  public updateText(newText:string):void {
-    if(!newText) return;
+  public updateText(newText: string): void {
+    if (!newText) return;
     this.particalEffect?.clearParticals();
     this.config.text = newText;
+    this.initiateText();
+  }
+
+  /**
+   * Updates the canvas configuration and resets the particle effect.
+   * If no configuration is provided, the method returns without making any changes.
+   * 
+   * @param config - The new canvas configuration to apply
+   * @returns void
+   * 
+   * @throws {Error} May throw an error if particle effect initialization fails
+   */
+  public updateConfig(config: CanvasConfig): void {
+    if (!config) return;
+    this.particalEffect?.clearParticals();
+    this.config = config;
     this.initiateText();
   }
 
