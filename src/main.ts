@@ -18,6 +18,7 @@
 import { initSlider } from "./range";
 import { TextCanvas } from "./TEXT_PARTICAL_EFFECT/TextCanvas";
 import type { CanvasConfig, Gradients } from "./TEXT_PARTICAL_EFFECT/types";
+import { WebGLTextCanvas } from "./TEXT_PARTICAL_EFFECT_WEBGL/WebGLTextCanvas";
 import { debounce } from "./utils/debounce";
 
 const FPS = 60;
@@ -43,7 +44,7 @@ const config: CanvasConfig = {
   text: 'Hello World!',
   maxWidthRatio: 0.8,
   fontFamily: 'Rowdies',
-  shape: 'circle',
+  shape: "triangle",
   gap: 4,
   gradients,
 };
@@ -62,7 +63,7 @@ async function init() {
     // Wait for all fonts to be loaded
     await document.fonts.load(`${config.fontSize}px ${config.fontFamily}`);
     await document.fonts.ready;
-    const textCanvas = new TextCanvas(config);
+    const textCanvas = new WebGLTextCanvas(config);
     textCanvas.initiateText();
 
     setupInputBox((text) => textCanvas.updateText(text));
