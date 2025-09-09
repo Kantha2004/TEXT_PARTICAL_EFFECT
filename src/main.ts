@@ -20,6 +20,10 @@ import { TextCanvas } from "./TEXT_PARTICAL_EFFECT/TextCanvas";
 import type { CanvasConfig, Gradients } from "./TEXT_PARTICAL_EFFECT/types";
 import { debounce } from "./utils/debounce";
 
+const FPS = 60;
+const LOOP_INTERVAL = 1_000 / FPS;
+let previousTimeStamp = 0;
+
 const gradients: Gradients = [
   {
     stop: 0.3, color: 'purple'
@@ -68,10 +72,14 @@ async function init() {
       textCanvas.updateConfig(config);
     });
 
-    const animate = () => {
-      textCanvas.renderEffect();
+    const animate = (timeStamp = 0) => {
+      if ((timeStamp - previousTimeStamp) >= LOOP_INTERVAL) {
+        previousTimeStamp = timeStamp;
+        textCanvas.renderEffect();
+      }
       requestAnimationFrame(animate);
     };
+
 
     window.addEventListener('resize', () => {
       textCanvas.resize(window.innerWidth, window.innerHeight);
